@@ -12,7 +12,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "vad",
+      "package": "com.vad.vadminingapp",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
