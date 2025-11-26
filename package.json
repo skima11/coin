@@ -35,9 +35,9 @@
     "expo-web-browser": "~15.0.9",
     "moti": "^0.30.0",
     "nativewind": "^4.2.1",
-    "react": "19.1.0",
+    "react": "^19.1.0",
     "react-dom": "19.1.0",
-    "react-native": "0.81.5",
+    "react-native": "^0.81.5",
     "react-native-dotenv": "^3.4.11",
     "react-native-gesture-handler": "~2.28.0",
     "react-native-google-mobile-ads": "^16.0.0",
@@ -49,7 +49,11 @@
     "uuid": "^13.0.0"
   },
   "devDependencies": {
+    "@types/date-fns": "^2.6.3",
+    "@types/expo": "^33.0.3",
     "@types/react": "~19.1.0",
+    "@types/react-native": "^0.73.0",
+    "@types/react-native-dotenv": "^0.2.2",
     "@types/uuid": "^11.0.0",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
