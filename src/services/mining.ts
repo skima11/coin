@@ -1,5 +1,6 @@
 // src/services/mining.ts
-import { supabase } from "../../lib/supabase";
+import { supabase } from "@/lib/supabase";
+
 import { v4 as uuidv4 } from "uuid";
 import {
   BASE_RATE_PER_HOUR,
