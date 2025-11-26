@@ -11,12 +11,18 @@ export const updateProfile = async ({
   username?: string;
   avatar_url?: string;
 }) => {
-  const user = supabase.auth.getUser();
+  // Ensure that the user exists
+  const userRes = await supabase.auth.getUser();
+  const userId = userRes.data?.user?.id;
+
+  if (!userId) {
+    throw new Error("User not found");
+  }
 
   const { data, error } = await supabase
     .from("profiles")
     .update({ username, avatar_url, updated_at: new Date() })
-    .eq("id", (await user).data.user?.id);
+    .eq("id", userId);
 
   if (error) throw error;
   return data;
@@ -28,7 +34,12 @@ export const updateProfile = async ({
 export const applyReferralCode = async (enteredCode: string) => {
   const { data: userData, error: userError } = await supabase.auth.getUser();
   if (userError) throw userError;
-  const userId = userData.data.user?.id;
+
+  const userId = userData?.user?.id;
+
+  if (!userId) {
+    throw new Error("User not found");
+  }
 
   // Get my own profile to prevent self-referral
   const { data: myProfile } = await supabase
@@ -74,7 +85,11 @@ export const applyReferralCode = async (enteredCode: string) => {
 // ----------------------
 export const generateReferralCode = async () => {
   const { data: userData } = await supabase.auth.getUser();
-  const userId = userData.data.user?.id;
+  const userId = userData?.user?.id;
+
+  if (!userId) {
+    throw new Error("User not found");
+  }
 
   const code = "vad" + Math.floor(100000 + Math.random() * 900000);
 
@@ -92,7 +107,11 @@ export const generateReferralCode = async () => {
 // ----------------------
 export const deleteAccount = async () => {
   const { data: userData } = await supabase.auth.getUser();
-  const userId = userData.data.user?.id;
+  const userId = userData?.user?.id;
+
+  if (!userId) {
+    throw new Error("User not found");
+  }
 
   // Delete avatar from storage
   const { data: profile } = await supabase
@@ -105,7 +124,7 @@ export const deleteAccount = async () => {
     await supabase.storage
       .from("avatars")
       .remove([profile.avatar_url])
-      .catch(() => {});
+      .catch(() => {}); // Prevent errors from interrupting the process
   }
 
   // Delete profile row
