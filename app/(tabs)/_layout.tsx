@@ -1,7 +1,31 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
+import { supabase } from "../../lib/supabase";
 
 export default function TabsLayout() {
+  const [profileCompleted, setProfileCompleted] = useState(true); // assume true by default
+
+  useEffect(() => {
+    const checkProfile = async () => {
+      const userRes = await supabase.auth.getUser();
+      const userId = userRes.data.user?.id;
+
+      if (!userId) return;
+
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("username")
+        .eq("id", userId)
+        .single();
+
+      // If username is missing, profile is not complete
+      setProfileCompleted(!!data?.username);
+    };
+
+    checkProfile();
+  }, []);
+
   return (
     <Tabs
       screenOptions={{
@@ -38,6 +62,8 @@ export default function TabsLayout() {
             <Ionicons name="person-outline" size={size} color={color} />
           ),
         }}
+        // Redirect to setup if profile is not complete
+        initialParams={{ profileCompleted }}
       />
     </Tabs>
   );
