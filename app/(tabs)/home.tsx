@@ -1,10 +1,10 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
+import MiningDashboard from "../../src/components/MiningDashboard";
 
-export default function ProfileScreen() {
+export default function HomeScreen() {
   return (
-    <View className="flex-1 items-center justify-center bg-white">
-      <Text className="text-2xl font-bold text-gray-700">Profile</Text>
-      <Text className="text-gray-500 mt-2">Coming Soon</Text>
+    <View className="flex-1">
+      <MiningDashboard />
     </View>
   );
 }

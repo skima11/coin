@@ -23,10 +23,10 @@ export default function RegisterScreen() {
     if (error) {
       setErrorMsg(error.message);
     } else {
-      setSuccessMsg("Account created! Please login.");
-      setTimeout(() => {
-        router.replace("/auth/login");
-      }, 1000);
+     setSuccessMsg("Account created!");
+// Redirect to profile setup instead of login
+router.replace("/profile/setup");
+
     }
 
     setLoading(false);
