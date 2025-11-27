@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import "dotenv/config";
 
 export default {
   expo: {
@@ -13,6 +13,7 @@ export default {
 
     ios: {
       supportsTablet: true,
+      bundleIdentifier: "com.vad.vadminingapp",
     },
 
     android: {
@@ -60,8 +61,6 @@ export default {
       eas: {
         projectId: "4c8236ee-0372-4141-ab89-31c84e48562c",
       },
-
-      // 👇 Add your expo.dev environment variables here
       supabaseUrl: process.env.SUPABASE_URL,
       supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
     },

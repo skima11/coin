@@ -4,7 +4,7 @@ module.exports = function (api) {
   return {
     presets: ["babel-preset-expo"],
     plugins: [
-      // ✅ React Compiler must come first
+      // React Compiler FIRST
       "react-compiler",
 
       // Expo Router
@@ -39,7 +39,7 @@ module.exports = function (api) {
         },
       ],
 
-      // ⚠️ Reanimated must ALWAYS be last
+      // Reanimated LAST
       "react-native-reanimated/plugin",
     ],
   };
