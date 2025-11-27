@@ -4,13 +4,16 @@ module.exports = function (api) {
   return {
     presets: ["babel-preset-expo"],
     plugins: [
-      // Expo Router (must be near top)
+      // ✅ React Compiler must come first
+      "react-compiler",
+
+      // Expo Router
       require.resolve("expo-router/babel"),
 
       // NativeWind
       "nativewind/babel",
 
-      // Path alias resolver
+      // Module resolver
       [
         "module-resolver",
         {
@@ -26,7 +29,7 @@ module.exports = function (api) {
         },
       ],
 
-      // Dotenv support
+      // Dotenv
       [
         "module:react-native-dotenv",
         {
@@ -36,7 +39,7 @@ module.exports = function (api) {
         },
       ],
 
-      // ⚠️ MUST stay last ALWAYS
+      // ⚠️ Reanimated must ALWAYS be last
       "react-native-reanimated/plugin",
     ],
   };

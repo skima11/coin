@@ -1,6 +1,15 @@
 import React, { useState } from "react";
-import { TouchableOpacity, Image, View, Text, StyleSheet } from "react-native";
+import {
+  TouchableOpacity,
+  Image,
+  View,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  Alert,
+} from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import * as ImageManipulator from "expo-image-manipulator";
 import { supabase } from "../../lib/supabase";
 
 interface AvatarPickerProps {
@@ -11,27 +20,63 @@ interface AvatarPickerProps {
 export default function AvatarPicker({ onUpload, initialUrl }: AvatarPickerProps) {
   const [avatar, setAvatar] = useState(initialUrl || "");
   const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
 
-  const pickImage = async () => {
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (!permissionResult.granted) return alert("Permission required!");
+  const openPickerMenu = () => {
+    Alert.alert("Select Avatar", "Choose an option", [
+      { text: "Take Photo", onPress: pickFromCamera },
+      { text: "Choose from Gallery", onPress: pickFromGallery },
+      { text: "Cancel", style: "cancel" },
+    ]);
+  };
 
-    const pickerResult = await ImagePicker.launchImageLibraryAsync({
+  const pickFromGallery = async () => {
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permission.granted) return alert("Permission required!");
+
+    const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 0.7,
       allowsEditing: true,
+      quality: 1,
     });
 
-    if (pickerResult.cancelled) return;
+    if (result.canceled) return;
+    handleImage(result.assets[0].uri);
+  };
 
+  const pickFromCamera = async () => {
+    const permission = await ImagePicker.requestCameraPermissionsAsync();
+    if (!permission.granted) return alert("Camera permission required!");
+
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (result.canceled) return;
+    handleImage(result.assets[0].uri);
+  };
+
+  const handleImage = async (uri: string) => {
     setUploading(true);
-    const fileUri = pickerResult.assets[0].uri;
-    const fileExt = fileUri.split(".").pop();
+
+    // 🔥 Compress the image to reduce file size
+    const compressed = await ImageManipulator.manipulateAsync(
+      uri,
+      [{ resize: { width: 600 } }],
+      { compress: 0.6, format: ImageManipulator.SaveFormat.JPEG }
+    );
+
+    const fileExt = compressed.uri.split(".").pop();
     const fileName = `avatar_${Date.now()}.${fileExt}`;
     const filePath = `${fileName}`;
 
-    const response = await fetch(fileUri);
+    // Fetch and convert to Blob
+    const response = await fetch(compressed.uri);
     const blob = await response.blob();
+
+    // Fake progress bar (Supabase doesn't give upload progress yet)
+    simulateProgress();
 
     const { data, error } = await supabase.storage
       .from("avatars")
@@ -39,41 +84,70 @@ export default function AvatarPicker({ onUpload, initialUrl }: AvatarPickerProps
 
     if (error) {
       alert("Upload failed: " + error.message);
-    } else {
-      const { data: urlData } = supabase.storage.from("avatars").getPublicUrl(filePath);
-      setAvatar(urlData.publicUrl);
-      onUpload(urlData.publicUrl);
+      setUploading(false);
+      return;
     }
 
+    const { data: urlData } = supabase.storage.from("avatars").getPublicUrl(filePath);
+
+    setAvatar(urlData.publicUrl);
+    onUpload(urlData.publicUrl);
+
     setUploading(false);
+    setProgress(100);
+    setTimeout(() => setProgress(0), 1500);
+  };
+
+  const simulateProgress = () => {
+    setProgress(0);
+    let p = 0;
+    const interval = setInterval(() => {
+      p += 10;
+      setProgress(p);
+      if (p >= 90) clearInterval(interval);
+    }, 150);
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={pickImage} style={styles.avatarContainer}>
+      <TouchableOpacity onPress={openPickerMenu} style={styles.avatarContainer}>
         {avatar ? (
           <Image source={{ uri: avatar }} style={styles.avatar} />
         ) : (
-          <Text style={styles.placeholder}>Select Avatar</Text>
+          <Text style={styles.placeholder}>Tap to Add Avatar</Text>
         )}
       </TouchableOpacity>
-      {uploading && <Text style={styles.uploading}>Uploading...</Text>}
+
+      {uploading && (
+        <View style={styles.progressContainer}>
+          <ActivityIndicator color="#6C5CE7" />
+          <Text style={styles.progressText}>Uploading... {progress}%</Text>
+        </View>
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { alignItems: "center", marginBottom: 20 },
+
   avatarContainer: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+    width: 140,
+    height: 140,
+    borderRadius: 70,
     backgroundColor: "#222",
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden",
   },
-  avatar: { width: "100%", height: "100%", borderRadius: 60 },
+  avatar: { width: "100%", height: "100%" },
   placeholder: { color: "#aaa", textAlign: "center" },
-  uploading: { marginTop: 5, color: "#6C5CE7" },
+
+  progressContainer: {
+    marginTop: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  progressText: { color: "#6C5CE7", fontSize: 14 },
 });
