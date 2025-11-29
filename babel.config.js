@@ -8,7 +8,7 @@ module.exports = function (api) {
       "react-compiler",
 
       // Expo Router
-      require.resolve("expo-router/babel"),
+      "expo-router/babel",
 
       // NativeWind
       "nativewind/babel",
