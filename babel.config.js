@@ -4,13 +4,13 @@ module.exports = function (api) {
   return {
     presets: ["babel-preset-expo"],
     plugins: [
-      // ✅ Expo Router (EAS + Metro safe)
-      require.resolve("expo-router/babel"),
+      // Expo Router
+      "expo-router/babel",
 
-      // ✅ NativeWind
+      // NativeWind (safe)
       "nativewind/babel",
 
-      // ✅ Module Resolver
+      // Module Resolver (safe placement)
       [
         "module-resolver",
         {
@@ -22,12 +22,12 @@ module.exports = function (api) {
             "@services": "./src/services",
             "@hooks": "./src/hooks",
             "@types": "./src/types",
-            "@lib": "./src/lib" // ✅ ADDED
+            "@lib": "./src/lib",
           },
         },
       ],
 
-      // ✅ Dotenv
+      // dotenv loader (must be BEFORE reanimated)
       [
         "module:react-native-dotenv",
         {
@@ -37,7 +37,7 @@ module.exports = function (api) {
         },
       ],
 
-      // ✅ MUST be last (critical for Android)
+      // Reanimated must ALWAYS be LAST
       "react-native-reanimated/plugin",
     ],
   };
