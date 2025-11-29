@@ -10,8 +10,7 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as ImageManipulator from "expo-image-manipulator";
-import { supabase } from "../../lib/supabase";
-
+import { supabase } from "@/lib/supabase";
 interface AvatarPickerProps {
   onUpload: (url: string) => void;
   initialUrl?: string;

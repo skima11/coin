@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet, Alert, ActivityIndicator, Clipboard } from "react-native";
 import { useRouter } from "expo-router";
-import { supabase } from "../../lib/supabase";
-import { deleteAccount } from "../../lib/supabaseApi";
+import { supabase } from "@/lib/supabase";
+import { deleteAccount } from "@/lib/supabaseApi";
 
 export default function ProfilePage() {
   const router = useRouter();

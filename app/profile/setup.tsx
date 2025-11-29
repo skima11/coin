@@ -3,8 +3,13 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, Alert } from "react-native";
 import { useRouter } from "expo-router";
-import AvatarPicker from "../../src/components/AvatarPicker";
-import { updateProfile, applyReferralCode, generateReferralCode } from "../../lib/supabaseApi";
+import AvatarPicker from "@/components/AvatarPicker";
+import {
+  updateProfile,
+  applyReferralCode,
+  generateReferralCode,
+} from "@/lib/supabaseApi";
+
 
 export default function ProfileSetupScreen() {
   const router = useRouter();

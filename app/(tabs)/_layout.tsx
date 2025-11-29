@@ -1,7 +1,8 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
-import { supabase } from "../../lib/supabase";
+import { supabase } from "@/lib/supabase";
+
 
 export default function TabsLayout() {
   const [profileCompleted, setProfileCompleted] = useState(true); // assume true by default
