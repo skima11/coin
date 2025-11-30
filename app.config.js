@@ -2,75 +2,53 @@ import "dotenv/config";
 
 export default {
   expo: {
-    name: "vad-mining-app",
-    slug: "vad-mining-app",
+    name: "coin",
+    slug: "coin",
     version: "1.0.0",
+    scheme: "coin",
     orientation: "portrait",
+    icon: "./assets/icon.png",
+    userInterfaceStyle: "light",
 
-    icon: "./assets/images/icon.png",
-    scheme: "vadminingapp",
-    userInterfaceStyle: "automatic",
-
-    newArchEnabled: true,
-
-    ios: {
-      supportsTablet: true,
-      bundleIdentifier: "com.vad.vadminingapp",
-    },
-
-    android: {
-      package: "com.vad.vadminingapp",
-      adaptiveIcon: {
-        backgroundColor: "#E6F4FE",
-        foregroundImage: "./assets/images/android-icon-foreground.png",
-        backgroundImage: "./assets/images/android-icon-background.png",
-        monochromeImage: "./assets/images/android-icon-monochrome.png",
-      },
-      edgeToEdgeEnabled: true,
-      predictiveBackGestureEnabled: false,
-    },
-
+    // 👇 Required for expo-router SSR/static
     web: {
-  output: "single",
-  favicon: "./assets/images/favicon.png",
-},
-
+      output: "server", // or "static" — but NOT "single"
+    },
 
     plugins: [
+      "expo-router",      // 👈 REQUIRED
       [
-        "expo-splash-screen",
+        "expo-build-properties",
         {
-          image: "./assets/images/splash-icon.png",
-          imageWidth: 200,
-          resizeMode: "contain",
-          backgroundColor: "#ffffff",
-          dark: {
-            backgroundColor: "#000000",
+          ios: {
+            useFrameworks: "static",
           },
         },
       ],
-      "expo-secure-store",
-      "expo-build-properties",
     ],
 
-    experiments: {
-      typedRoutes: true,
+    ios: {
+      supportsTablet: false,
+    },
 
-      /**  ❤️ REQUIRED new compiler config for Expo 54 */
-      reactCompiler: {
-        enabled: true,
-        // optional recommended options:
-        optimizeDependencies: true,
-        // remove if issues: devtools: true,
+    android: {
+      adaptiveIcon: {
+        foregroundImage: "./assets/adaptive-icon.png",
+        backgroundColor: "#ffffff",
       },
+      package: "com.coin.app",
     },
 
     extra: {
+      SUPABASE_URL: process.env.SUPABASE_URL,
+      SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
       eas: {
-        projectId: "4c8236ee-0372-4141-ab89-31c84e48562c",
+        projectId: "YOUR_PROJECT_ID",
       },
-      supabaseUrl: process.env.SUPABASE_URL,
-      supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
+    },
+
+    experiments: {
+      typedRoutes: true,
     },
   },
 };

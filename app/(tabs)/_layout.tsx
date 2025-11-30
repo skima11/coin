@@ -37,9 +37,13 @@ export default function TabsLayout() {
         name="home"
         options={{
           title: "Home",
-          tabBarIcon: ({ color, size }: { color: string; size: number }) => (
-            <Ionicons name="home-outline" size={size} color={color} />
-          ),
+          tabBarIcon: ({
+            color,
+            size,
+          }: {
+            color: string;
+            size: number;
+          }) => <Ionicons name="home-outline" size={size} color={color} />,
         }}
       />
 
@@ -47,7 +51,13 @@ export default function TabsLayout() {
         name="explore"
         options={{
           title: "Explore",
-          tabBarIcon: ({ color, size }: { color: string; size: number }) => (
+          tabBarIcon: ({
+            color,
+            size,
+          }: {
+            color: string;
+            size: number;
+          }) => (
             <Ionicons name="compass-outline" size={size} color={color} />
           ),
         }}
@@ -57,9 +67,13 @@ export default function TabsLayout() {
         name="profile"
         options={{
           title: "Profile",
-          tabBarIcon: ({ color, size }: { color: string; size: number }) => (
-            <Ionicons name="person-outline" size={size} color={color} />
-          ),
+          tabBarIcon: ({
+            color,
+            size,
+          }: {
+            color: string;
+            size: number;
+          }) => <Ionicons name="person-outline" size={size} color={color} />,
         }}
         initialParams={{ profileCompleted }}
       />

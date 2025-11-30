@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
-import { useAuth } from "../../src/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -21,7 +21,7 @@ export default function LoginScreen() {
     if (error) {
       setErrorMsg(error.message);
     } else {
-      router.replace("/(tabs)"); // redirect after login
+      router.replace("/home"); // redirect after login
     }
 
     setLoading(false);
