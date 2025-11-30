@@ -31,9 +31,10 @@ export default {
     },
 
     web: {
-      output: "static",
-      favicon: "./assets/images/favicon.png",
-    },
+  output: "single",
+  favicon: "./assets/images/favicon.png",
+},
+
 
     plugins: [
       [
