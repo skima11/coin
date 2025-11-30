@@ -4,8 +4,7 @@ module.exports = function (api) {
   return {
     presets: ["babel-preset-expo"],
     plugins: [
-      // Expo Router plugin (correct for v3)
-      require.resolve("expo-router/babel"),
+      // ❌ REMOVE expo-router/babel completely
 
       // NativeWind
       "nativewind/babel",
