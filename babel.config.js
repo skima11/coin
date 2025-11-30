@@ -4,12 +4,10 @@ module.exports = function (api) {
   return {
     presets: ["babel-preset-expo"],
     plugins: [
-      // ❌ REMOVE expo-router/babel completely
-
       // NativeWind
       "nativewind/babel",
 
-      // Module aliases
+      // Module aliasing
       [
         "module-resolver",
         {
@@ -36,7 +34,7 @@ module.exports = function (api) {
         },
       ],
 
-      // Reanimated LAST
+      // Reanimated must come last
       "react-native-reanimated/plugin",
     ],
   };
