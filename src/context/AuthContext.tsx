@@ -41,27 +41,30 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   // --- Watch for auth state changes ---
-  useEffect(() => {
-    const initializeAuth = async () => {
-      const { data } = await supabase.auth.getSession();
-      setSession(data.session ?? null);
-      setUser(data.session?.user ?? null);
-      setLoading(false);
-    };
+ useEffect(() => {
+  const initializeAuth = async () => {
+    const { data } = await supabase.auth.getSession();
+    setSession(data.session ?? null);
+    setUser(data.session?.user ?? null);
+    setLoading(false);
+  };
 
-    initializeAuth();
+  initializeAuth();
 
-    const { data: subscription } = supabase.auth.onAuthStateChange(
-      (event: AuthChangeEvent, newSession: Session | null) => {
-        setSession(newSession);
-        setUser(newSession?.user ?? null);
-      }
-    );
+  // Subscribe to auth changes
+  const { data: listener } = supabase.auth.onAuthStateChange(
+    (event: AuthChangeEvent, newSession: Session | null) => {
+      setSession(newSession);
+      setUser(newSession?.user ?? null);
+    }
+  );
 
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
+  // Clean up subscription
+  return () => {
+    listener?.subscription.unsubscribe();
+  };
+}, []);
+
 
   return (
     <AuthContext.Provider
