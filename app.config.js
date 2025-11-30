@@ -34,7 +34,6 @@ export default {
     },
 
     plugins: [
-      "expo-router",
       [
         "expo-splash-screen",
         {
@@ -53,10 +52,10 @@ export default {
 
     experiments: {
       typedRoutes: true,
+      reactCompiler: true, // optional but recommended
     },
 
     extra: {
-      router: {},
       eas: {
         projectId: "4c8236ee-0372-4141-ab89-31c84e48562c",
       },
