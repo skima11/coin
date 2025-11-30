@@ -6,9 +6,11 @@ export default {
     slug: "vad-mining-app",
     version: "1.0.0",
     orientation: "portrait",
+
     icon: "./assets/images/icon.png",
     scheme: "vadminingapp",
     userInterfaceStyle: "automatic",
+
     newArchEnabled: true,
 
     ios: {
@@ -52,7 +54,14 @@ export default {
 
     experiments: {
       typedRoutes: true,
-      reactCompiler: true, // optional but recommended
+
+      /**  ❤️ REQUIRED new compiler config for Expo 54 */
+      reactCompiler: {
+        enabled: true,
+        // optional recommended options:
+        optimizeDependencies: true,
+        // remove if issues: devtools: true,
+      },
     },
 
     extra: {

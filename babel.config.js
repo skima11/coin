@@ -2,7 +2,8 @@ module.exports = function (api) {
   api.cache(true);
 
   return {
-    presets: ["babel-preset-expo"],
+    presets: ["expo-router/babel"],
+
     plugins: [
       // NativeWind
       "nativewind/babel",
@@ -11,6 +12,7 @@ module.exports = function (api) {
       [
         "module-resolver",
         {
+          extensions: [".js", ".jsx", ".ts", ".tsx"],
           root: ["./"],
           alias: {
             "@": "./src",
@@ -24,7 +26,7 @@ module.exports = function (api) {
         },
       ],
 
-      // dotenv
+      // react-native-dotenv
       [
         "module:react-native-dotenv",
         {
@@ -37,5 +39,11 @@ module.exports = function (api) {
       // MUST BE LAST
       "react-native-reanimated/plugin",
     ],
+
+    env: {
+      production: {
+        plugins: ["react-native-paper/babel"],
+      },
+    },
   };
 };
