@@ -3,9 +3,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
-
 export default function TabsLayout() {
-  const [profileCompleted, setProfileCompleted] = useState(true); // assume true by default
+  const [profileCompleted, setProfileCompleted] = useState(true);
 
   useEffect(() => {
     const checkProfile = async () => {
@@ -14,13 +13,12 @@ export default function TabsLayout() {
 
       if (!userId) return;
 
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from("profiles")
         .select("username")
         .eq("id", userId)
         .single();
 
-      // If username is missing, profile is not complete
       setProfileCompleted(!!data?.username);
     };
 
@@ -39,7 +37,7 @@ export default function TabsLayout() {
         name="home"
         options={{
           title: "Home",
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ color, size }: { color: string; size: number }) => (
             <Ionicons name="home-outline" size={size} color={color} />
           ),
         }}
@@ -49,7 +47,7 @@ export default function TabsLayout() {
         name="explore"
         options={{
           title: "Explore",
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ color, size }: { color: string; size: number }) => (
             <Ionicons name="compass-outline" size={size} color={color} />
           ),
         }}
@@ -59,11 +57,10 @@ export default function TabsLayout() {
         name="profile"
         options={{
           title: "Profile",
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ color, size }: { color: string; size: number }) => (
             <Ionicons name="person-outline" size={size} color={color} />
           ),
         }}
-        // Redirect to setup if profile is not complete
         initialParams={{ profileCompleted }}
       />
     </Tabs>

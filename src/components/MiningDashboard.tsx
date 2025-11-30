@@ -10,8 +10,8 @@ import {
   applyBoost,
   claimDailyReward,
   stopMining,
-} from "@/services/mining";
-import { showRewardedAd, loadRewardedAd } from "@/services/ads";
+} from "@/lib/mining";
+import { showRewardedAd, loadRewardedAd } from "@/lib/ads";
 import { format } from "date-fns";
 
 export default function MiningDashboard() {
