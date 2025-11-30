@@ -43,7 +43,7 @@ export default {
       SUPABASE_URL: process.env.SUPABASE_URL,
       SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
       eas: {
-        projectId: "YOUR_PROJECT_ID",
+        projectId: "db5380b1-97c6-4fd5-bfa1-c54a6da4d984",
       },
     },
 
