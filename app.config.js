@@ -12,11 +12,11 @@ export default {
 
     // 👇 Required for expo-router SSR/static
     web: {
-      output: "server", // or "static" — but NOT "single"
+      output: "server",
     },
 
     plugins: [
-      "expo-router",      // 👈 REQUIRED
+      "expo-router",
       [
         "expo-build-properties",
         {
@@ -42,8 +42,10 @@ export default {
     extra: {
       SUPABASE_URL: process.env.SUPABASE_URL,
       SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
+
+      // ✅ YOUR REAL EAS PROJECT ID (ADDED)
       eas: {
-        projectId: "db5380b1-97c6-4fd5-bfa1-c54a6da4d984",
+        projectId: "68b17be2-4e27-4dc9-a0b0-cf1a051d337f",
       },
     },
 
