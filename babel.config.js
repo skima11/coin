@@ -34,7 +34,7 @@ module.exports = function (api) {
         },
       ],
 
-      // Reanimated must come last
+      // MUST BE LAST
       "react-native-reanimated/plugin",
     ],
   };
