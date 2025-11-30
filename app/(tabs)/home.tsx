@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import MiningDashboard from "../../src/components/MiningDashboard";
+import MiningDashboard from "@/components/MiningDashboard";
 
 export default function HomeScreen() {
   return (
