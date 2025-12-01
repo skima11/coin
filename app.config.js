@@ -7,10 +7,9 @@ export default {
     version: "1.0.0",
     scheme: "coin",
     orientation: "portrait",
-    icon: "./assets/icon.png",
+    icon: "./assets/images/icon.png", // ✅ fixed path
     userInterfaceStyle: "light",
 
-    // 👇 Required for expo-router SSR/static
     web: {
       output: "server",
     },
@@ -33,17 +32,23 @@ export default {
 
     android: {
       adaptiveIcon: {
-        foregroundImage: "./assets/adaptive-icon.png",
+        foregroundImage: "./assets/images/android-icon-foreground.png", // ✅ fixed
+        backgroundImage: "./assets/images/android-icon-background.png", // 🆕 added
+        monochromeImage: "./assets/images/android-icon-monochrome.png", // 🆕 added
         backgroundColor: "#ffffff",
       },
       package: "com.coin.app",
     },
 
+    splash: {
+      image: "./assets/images/splash-icon.png", // 🆕 added
+      resizeMode: "contain",
+      backgroundColor: "#ffffff",
+    },
+
     extra: {
       SUPABASE_URL: process.env.SUPABASE_URL,
       SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
-
-      // ✅ YOUR REAL EAS PROJECT ID (ADDED)
       eas: {
         projectId: "68b17be2-4e27-4dc9-a0b0-cf1a051d337f",
       },
@@ -54,3 +59,4 @@ export default {
     },
   },
 };
+
