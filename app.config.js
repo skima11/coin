@@ -10,10 +10,6 @@ export default {
     icon: "./assets/images/icon.png", // ✅ fixed path
     userInterfaceStyle: "light",
 
-    web: {
-      output: "server",
-    },
-
     plugins: [
       "expo-router",
       [
